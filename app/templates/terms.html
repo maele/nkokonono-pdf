@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}Terms of Service — {{ app_name }}{% endblock %}
+{% block content %}
+<section class="py-12 sm:py-16">
+  <div class="mx-auto max-w-3xl px-4 sm:px-6">
+    <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">Terms of Service</h1>
+    <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">Last updated: {{ current_year }}</p>
+
+    <div class="mt-10 space-y-8 text-slate-700 dark:text-slate-300">
+      <section>
+        <h2 class="text-xl font-semibold text-slate-900 dark:text-slate-100">1. Acceptance of terms</h2>
+        <p class="mt-2 text-sm">
+          By accessing or using Nkokonono ea PDF (&ldquo;the Service&rdquo;), you agree to
+          be bound by these Terms of Service. If you do not agree, do not use the Service.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-semibold text-slate-900 dark:text-slate-100">2. The Service</h2>
+        <p class="mt-2 text-sm">
+          The Service provides tools for manipulating, converting, and organising PDF
+          documents. The Service is open source under the MIT licence. It is provided
+          free of charge, on a best-effort basis, with no guarantee of uptime or
+          availability.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-semibold text-slate-900 dark:text-slate-100">3. Your responsibilities</h2>
+        <p class="mt-2 text-sm">You agree to:</p>
+        <ul class="mt-2 list-disc space-y-1 pl-6 text-sm">
+          <li>Only upload documents you have the legal right to process.</li>
+          <li>Not upload malicious, illegal, or harmful content.</li>
+          <li>Not attempt to disrupt the Service or bypass rate limits or access controls.</li>
+          <li>Not rely on the Service as the sole copy of any important document — retain your own backups.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-semibold text-slate-900 dark:text-slate-100">4. File handling</h2>
+        <p class="mt-2 text-sm">
+          Uploaded files are stored in a private temporary directory on our infrastructure
+          and are automatically removed according to our retention policy (typically within
+          one hour of job completion). We do not sell or share your documents with third
+          parties. Do not upload documents containing sensitive information that you are
+          not authorised to process.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-semibold text-slate-900 dark:text-slate-100">5. No warranty</h2>
+        <p class="mt-2 text-sm uppercase tracking-wide">
+          THE SERVICE IS PROVIDED &ldquo;AS IS&rdquo;, WITHOUT WARRANTY OF ANY KIND, EXPRESS
+          OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+          FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+        </p>
+        <p class="mt-2 text-sm">
+          We do not warrant that the Service will be uninterrupted, error-free, or that
+          every document will process correctly. Conversion fidelity in particular is
+          best-effort and may not preserve every aspect of complex documents.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-semibold text-slate-900 dark:text-slate-100">6. Limitation of liability</h2>
+        <p class="mt-2 text-sm uppercase tracking-wide">
+          IN NO EVENT SHALL THE AUTHORS, COPYRIGHT HOLDERS, MAINTAINERS, OR CONTRIBUTORS OF
+          NKOKONONO EA PDF BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER
+          IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN
+          CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. THIS
+          INCLUDES, WITHOUT LIMITATION, ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+          CONSEQUENTIAL, OR EXEMPLARY DAMAGES, INCLUDING LOSS OF DATA, LOSS OF PROFITS, OR
+          BUSINESS INTERRUPTION.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-semibold text-slate-900 dark:text-slate-100">7. Indemnification</h2>
+        <p class="mt-2 text-sm">
+          You agree to indemnify, defend, and hold harmless the developers, maintainers,
+          and contributors of Nkokonono ea PDF from and against any and all claims, damages,
+          losses, liabilities, costs, and expenses (including reasonable legal fees) arising
+          from or relating to (a) your use of the Service, (b) any documents you upload, or
+          (c) your violation of these Terms.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-semibold text-slate-900 dark:text-slate-100">8. Changes to these terms</h2>
+        <p class="mt-2 text-sm">
+          These Terms may be updated from time to time. Continued use of the Service
+          after changes constitutes acceptance of the updated Terms.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-semibold text-slate-900 dark:text-slate-100">9. Governing law</h2>
+        <p class="mt-2 text-sm">
+          These Terms are governed by the laws of Lesotho, without regard to conflict of
+          law principles. [Replace with your actual jurisdiction before publishing.]
+        </p>
+      </section>
+    </div>
+  </div>
+</section>
+{% endblock %}

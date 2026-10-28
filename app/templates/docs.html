@@ -1,0 +1,254 @@
+{% extends "base.html" %}
+{% block title %}Docs — {{ app_name }}{% endblock %}
+{% block content %}
+<section class="py-12 sm:py-16">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <div class="lg:grid lg:grid-cols-[220px_1fr] lg:gap-12">
+
+      <!-- Sticky TOC on lg+ -->
+      <aside class="hidden lg:block">
+        <nav class="sticky top-24" aria-label="Table of contents">
+          <p class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">On this page</p>
+          <ul class="mt-3 space-y-2 text-sm">
+            <li><a href="#quickstart" class="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100">Quickstart</a></li>
+            <li><a href="#tools" class="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100">All tools</a></li>
+            <li><a href="#limits" class="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100">Limits</a></li>
+            <li><a href="#privacy" class="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100">Privacy &amp; files</a></li>
+            <li><a href="#issues" class="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100">Common issues</a></li>
+            <li><a href="#developers" class="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100">For developers</a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <div>
+        <header class="max-w-2xl">
+          <h1 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-slate-100">Docs</h1>
+          <p class="mt-3 text-lg text-slate-600 dark:text-slate-400">
+            Everything you need to get useful work out of {{ app_name }} — from your
+            first upload to file limits and self-hosting.
+          </p>
+        </header>
+
+        <!-- Quickstart -->
+        <section id="quickstart" class="mt-12">
+          <h2 class="text-xl font-semibold text-slate-900 sm:text-2xl dark:text-slate-100">Quickstart</h2>
+          <p class="mt-2 text-slate-700 dark:text-slate-300">
+            Every tool follows the same four-step workflow. There is no account, no
+            sign-up, and no limit on how many documents you process.
+          </p>
+          <ol class="mt-6 grid gap-4 sm:grid-cols-2">
+            <li class="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+              <p class="text-xs font-semibold uppercase tracking-wider text-teal-700 dark:text-teal-300">Step 1</p>
+              <p class="mt-1 font-semibold text-slate-900 dark:text-slate-100">Upload</p>
+              <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Drag files onto the drop zone, or click to browse. The file type and size are validated before anything else happens.</p>
+            </li>
+            <li class="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+              <p class="text-xs font-semibold uppercase tracking-wider text-teal-700 dark:text-teal-300">Step 2</p>
+              <p class="mt-1 font-semibold text-slate-900 dark:text-slate-100">Configure</p>
+              <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Set the options the tool needs (page ranges, passwords, watermark text). Only the fields relevant to that tool are shown.</p>
+            </li>
+            <li class="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+              <p class="text-xs font-semibold uppercase tracking-wider text-teal-700 dark:text-teal-300">Step 3</p>
+              <p class="mt-1 font-semibold text-slate-900 dark:text-slate-100">Process</p>
+              <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Click <strong>Process</strong>. The job is queued, processed on the server, and validated before you're offered a download.</p>
+            </li>
+            <li class="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+              <p class="text-xs font-semibold uppercase tracking-wider text-teal-700 dark:text-teal-300">Step 4</p>
+              <p class="mt-1 font-semibold text-slate-900 dark:text-slate-100">Download</p>
+              <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Download the result. Files are removed from our servers after {{ retention_seconds // 60 }} minutes — save yours before then.</p>
+            </li>
+          </ol>
+        </section>
+
+        <!-- All tools -->
+        <section id="tools" class="mt-16">
+          <h2 class="text-xl font-semibold text-slate-900 sm:text-2xl dark:text-slate-100">All tools</h2>
+          <p class="mt-2 text-slate-700 dark:text-slate-300">
+            {{ tools|length }} tools, grouped by category. Click any tool to open it.
+          </p>
+
+          {% for category in categories %}
+            {% set items = tools | selectattr("category", "equalto", category) | list %}
+            {% if items %}
+              <div class="mt-8 first:mt-6">
+                <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{{ category }}</h3>
+                <div class="mt-3 space-y-2">
+                  {% for tool in items %}
+                    <a href="{{ url_for('tools.tool_page', tool_name=tool.slug) }}"
+                       class="group flex items-start justify-between gap-4 rounded-xl border border-slate-200 bg-white p-4 transition hover:border-slate-300 hover:shadow-sm dark:border-slate-800 dark:bg-slate-900 dark:hover:border-slate-700">
+                      <span class="min-w-0">
+                        <span class="block font-semibold text-slate-900 group-hover:text-teal-700 dark:text-slate-100 dark:group-hover:text-teal-300">{{ tool.title }}</span>
+                        <span class="mt-0.5 block text-sm text-slate-600 dark:text-slate-400">{{ tool.summary }}</span>
+                      </span>
+                      <svg class="mt-0.5 flex-none text-slate-400 group-hover:text-teal-600 dark:group-hover:text-teal-400" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+                      </svg>
+                    </a>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </section>
+
+        <!-- Limits -->
+        <section id="limits" class="mt-16">
+          <h2 class="text-xl font-semibold text-slate-900 sm:text-2xl dark:text-slate-100">Limits</h2>
+          <p class="mt-2 text-slate-700 dark:text-slate-300">
+            To keep the service reliable for everyone, the following limits apply. They
+            are configurable by self-hosters.
+          </p>
+          <div class="mt-4 overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead class="border-b border-slate-200 dark:border-slate-700">
+                <tr class="text-left">
+                  <th class="pb-2 pr-4 font-semibold text-slate-900 dark:text-slate-100">Limit</th>
+                  <th class="pb-2 font-semibold text-slate-900 dark:text-slate-100">Value</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+                <tr>
+                  <td class="py-2 pr-4 text-slate-700 dark:text-slate-300">Maximum size per file</td>
+                  <td class="py-2 font-medium text-slate-900 dark:text-slate-100">{{ max_upload_mb }} MB</td>
+                </tr>
+                <tr>
+                  <td class="py-2 pr-4 text-slate-700 dark:text-slate-300">Files per operation</td>
+                  <td class="py-2 font-medium text-slate-900 dark:text-slate-100">{{ max_files_per_job }}</td>
+                </tr>
+                <tr>
+                  <td class="py-2 pr-4 text-slate-700 dark:text-slate-300">File retention after download</td>
+                  <td class="py-2 font-medium text-slate-900 dark:text-slate-100">{{ retention_seconds // 60 }} minutes</td>
+                </tr>
+                <tr>
+                  <td class="py-2 pr-4 text-slate-700 dark:text-slate-300">Rate limits (per IP)</td>
+                  <td class="py-2 font-medium text-slate-900 dark:text-slate-100">30 uploads/min, 10 jobs/min</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Privacy -->
+        <section id="privacy" class="mt-16">
+          <h2 class="text-xl font-semibold text-slate-900 sm:text-2xl dark:text-slate-100">Privacy &amp; file handling</h2>
+          <ul class="mt-3 space-y-2 text-sm text-slate-700 dark:text-slate-300">
+            <li class="flex gap-2">
+              <span class="mt-1.5 inline-block h-1.5 w-1.5 flex-none rounded-full bg-teal-500"></span>
+              Uploaded files are stored in a private temporary directory on our infrastructure — inaccessible over the web.
+            </li>
+            <li class="flex gap-2">
+              <span class="mt-1.5 inline-block h-1.5 w-1.5 flex-none rounded-full bg-teal-500"></span>
+              Files are removed automatically {{ retention_seconds // 60 }} minutes after a job completes.
+            </li>
+            <li class="flex gap-2">
+              <span class="mt-1.5 inline-block h-1.5 w-1.5 flex-none rounded-full bg-teal-500"></span>
+              Passwords and document contents are never written to logs.
+            </li>
+            <li class="flex gap-2">
+              <span class="mt-1.5 inline-block h-1.5 w-1.5 flex-none rounded-full bg-teal-500"></span>
+              No documents are sent to external conversion or AI providers — everything runs on our own servers.
+            </li>
+          </ul>
+          <p class="mt-3 text-sm text-slate-600 dark:text-slate-400">
+            See the <a href="{{ url_for('main.privacy') }}" class="text-teal-700 underline underline-offset-2 dark:text-teal-300">Privacy page</a> for the full details.
+          </p>
+        </section>
+
+        <!-- Common issues -->
+        <section id="issues" class="mt-16">
+          <h2 class="text-xl font-semibold text-slate-900 sm:text-2xl dark:text-slate-100">Common issues</h2>
+
+          <div class="mt-4 space-y-4">
+            <details class="group rounded-xl border border-slate-200 bg-white p-4 open:shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <summary class="cursor-pointer font-medium text-slate-900 dark:text-slate-100">
+                &ldquo;The file does not appear to be a valid PDF&rdquo;
+              </summary>
+              <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
+                The file's magic bytes don't match <code class="rounded bg-slate-100 px-1 py-0.5 text-xs dark:bg-slate-800">%PDF-</code>. This usually means the file is not really a PDF (renamed from another format), or it's corrupted. Open it in a PDF viewer to check.
+              </p>
+            </details>
+
+            <details class="group rounded-xl border border-slate-200 bg-white p-4 open:shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <summary class="cursor-pointer font-medium text-slate-900 dark:text-slate-100">
+                Merge with a single file returns an error
+              </summary>
+              <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
+                Merge requires at least two PDFs — otherwise there is nothing to merge. Upload a second file to enable the Process button.
+              </p>
+            </details>
+
+            <details class="group rounded-xl border border-slate-200 bg-white p-4 open:shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <summary class="cursor-pointer font-medium text-slate-900 dark:text-slate-100">
+                Unlock says my password is wrong
+              </summary>
+              <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
+                Unlock only works when you supply the correct password — it is not a password recovery tool. If you don't know the password, the file cannot be opened.
+              </p>
+            </details>
+
+            <details class="group rounded-xl border border-slate-200 bg-white p-4 open:shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <summary class="cursor-pointer font-medium text-slate-900 dark:text-slate-100">
+                PDF-to-Excel says no tables were detected
+              </summary>
+              <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
+                Table detection is heuristic. It works best on text-based PDFs with ruled tables. Scanned PDFs need the OCR tool first. PDFs laid out as free-flowing text with no table structure will not produce a spreadsheet — that's a limitation of the format, not a bug.
+              </p>
+            </details>
+
+            <details class="group rounded-xl border border-slate-200 bg-white p-4 open:shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <summary class="cursor-pointer font-medium text-slate-900 dark:text-slate-100">
+                The download link has disappeared
+              </summary>
+              <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
+                Files are removed {{ retention_seconds // 60 }} minutes after the job completes. If you need the file again after that, re-upload and re-process — this is the trade-off for not keeping your documents on our servers.
+              </p>
+            </details>
+
+            <details class="group rounded-xl border border-slate-200 bg-white p-4 open:shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <summary class="cursor-pointer font-medium text-slate-900 dark:text-slate-100">
+                A tool says it's not available on this server
+              </summary>
+              <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
+                Some tools require native binaries (LibreOffice, Tesseract, OCRmyPDF) or optional Python packages. When the underlying dependency is missing, the tool page shows a red notice instead of a broken upload form. Ask the administrator to install the required component, or open an issue on GitHub.
+              </p>
+            </details>
+          </div>
+        </section>
+
+        <!-- Developers -->
+        <section id="developers" class="mt-16">
+          <h2 class="text-xl font-semibold text-slate-900 sm:text-2xl dark:text-slate-100">For developers</h2>
+          <p class="mt-2 text-slate-700 dark:text-slate-300">
+            Nkokonono is open source under the MIT Licence. The full source, deployment
+            instructions, and contribution guidelines live on GitHub.
+          </p>
+
+          <div class="mt-6 grid gap-4 sm:grid-cols-2">
+            <a href="{{ github_url }}" target="_blank" rel="noopener noreferrer"
+               class="rounded-xl border border-slate-200 bg-white p-4 hover:border-slate-300 hover:shadow-sm dark:border-slate-800 dark:bg-slate-900 dark:hover:border-slate-700">
+              <p class="text-xs font-semibold uppercase tracking-wider text-teal-700 dark:text-teal-300">Source code</p>
+              <p class="mt-1 font-semibold text-slate-900 dark:text-slate-100">GitHub repository</p>
+              <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Full source, issues, pull requests.</p>
+            </a>
+            <a href="{{ url_for('main.licensing') }}"
+               class="rounded-xl border border-slate-200 bg-white p-4 hover:border-slate-300 hover:shadow-sm dark:border-slate-800 dark:bg-slate-900 dark:hover:border-slate-700">
+              <p class="text-xs font-semibold uppercase tracking-wider text-teal-700 dark:text-teal-300">Licensing</p>
+              <p class="mt-1 font-semibold text-slate-900 dark:text-slate-100">Licence details</p>
+              <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Our licence, dependencies, and copyleft implications.</p>
+            </a>
+          </div>
+
+          <div class="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-700 dark:bg-slate-800/60">
+            <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">Running your own instance</h3>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
+              The project ships with a Docker Compose stack (Flask, Gunicorn, PostgreSQL, Redis, Celery, Nginx).
+              Full self-hosting instructions are in <code class="rounded bg-white px-1 py-0.5 text-xs text-slate-900 dark:bg-slate-900 dark:text-slate-100">DEPLOYMENT.md</code> in the repository.
+            </p>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

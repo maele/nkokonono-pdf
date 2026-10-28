@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Databases & runtime state
+*.db
+instance/
+
+# Uploaded files & processed outputs — never commit user data
+storage/
+storage-test/
+storage-*/
+
+# Test & coverage artefacts
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+mypy_cache/
+.ruff_cache/
+
+# Node (Tailwind build — Phase 5+)
+node_modules/
+package-lock.json
+app/static/css/tailwind.css
+
+# Docker / ops
+backups/
+nginx/certs/
+
+# OS junk
+.DS_Store
+Thumbs.db

@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% block title %}Licensing — {{ app_name }}{% endblock %}
+{% block content %}
+<section class="py-12 sm:py-16">
+  <div class="mx-auto max-w-3xl px-4 sm:px-6">
+
+    <header class="max-w-2xl">
+      <h1 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-slate-100">Licensing</h1>
+      <p class="mt-3 text-lg text-slate-600 dark:text-slate-400">
+        Nkokonono ea PDF is open source. This page describes the licence on our code,
+        the licences of the libraries and tools we depend on, and what you should know
+        before redistributing or hosting the project.
+      </p>
+    </header>
+
+    <div class="mt-8 rounded-xl border border-slate-300 bg-slate-50 p-5 dark:border-slate-700 dark:bg-slate-800/60">
+      <p class="text-sm text-slate-700 dark:text-slate-300">
+        <strong>This page is informational, not legal advice.</strong> If you plan to
+        redistribute or host Nkokonono commercially, consult a lawyer about how the
+        licence mix below applies to your situation.
+      </p>
+    </div>
+
+    <!-- Own licence -->
+    <section class="mt-12">
+      <h2 class="text-xl font-semibold text-slate-900 sm:text-2xl dark:text-slate-100">Nkokonono's own licence</h2>
+      <p class="mt-2 text-slate-700 dark:text-slate-300">
+        Our original source code is released under the
+        <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer"
+           class="text-teal-700 underline underline-offset-2 hover:text-teal-800 dark:text-teal-300 dark:hover:text-teal-200">MIT Licence</a>.
+        In short, you may:
+      </p>
+      <ul class="mt-3 space-y-1.5 text-sm text-slate-700 dark:text-slate-300">
+        <li class="flex gap-2"><span class="mt-1.5 h-1.5 w-1.5 flex-none rounded-full bg-teal-500"></span>Use, copy, modify, merge, publish, distribute, sublicense, and sell copies.</li>
+        <li class="flex gap-2"><span class="mt-1.5 h-1.5 w-1.5 flex-none rounded-full bg-teal-500"></span>Use it privately or commercially.</li>
+      </ul>
+      <p class="mt-3 text-sm text-slate-600 dark:text-slate-400">
+        The only condition is that the copyright notice and permission notice are
+        preserved in all copies. The software is provided "as is" without warranty.
+        See the <a href="{{ github_url }}/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="text-teal-700 underline underline-offset-2 dark:text-teal-300">full licence text</a>.
+      </p>
+    </section>
+
+    <!-- Dependencies -->
+    <section class="mt-12">
+      <h2 class="text-xl font-semibold text-slate-900 sm:text-2xl dark:text-slate-100">Third-party dependencies</h2>
+      <p class="mt-2 text-slate-700 dark:text-slate-300">
+        Nkokonono builds on the work of many other projects. Each retains its own
+        licence. Grouped by licence family:
+      </p>
+
+      <div class="mt-4 overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="border-b border-slate-200 dark:border-slate-700">
+            <tr class="text-left">
+              <th class="pb-2 pr-4 font-semibold text-slate-900 dark:text-slate-100">Licence</th>
+              <th class="pb-2 font-semibold text-slate-900 dark:text-slate-100">Packages</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+            <tr>
+              <td class="py-3 pr-4 align-top font-medium text-slate-900 dark:text-slate-100">MIT</td>
+              <td class="py-3 text-slate-700 dark:text-slate-300">Flask-Migrate, Flask-Limiter, pdfplumber, python-pptx, openpyxl, redis-py, gunicorn</td>
+            </tr>
+            <tr>
+              <td class="py-3 pr-4 align-top font-medium text-slate-900 dark:text-slate-100">BSD-3-Clause</td>
+              <td class="py-3 text-slate-700 dark:text-slate-300">Flask, Flask-WTF, Flask-SQLAlchemy, python-dotenv, itsdangerous, pypdf, reportlab, Celery, WeasyPrint</td>
+            </tr>
+            <tr>
+              <td class="py-3 pr-4 align-top font-medium text-slate-900 dark:text-slate-100">Apache-2.0 <span class="text-xs text-slate-500 dark:text-slate-400">or</span> BSD-3-Clause</td>
+              <td class="py-3 text-slate-700 dark:text-slate-300">cryptography (dual-licensed)</td>
+            </tr>
+            <tr>
+              <td class="py-3 pr-4 align-top font-medium text-slate-900 dark:text-slate-100">HPND</td>
+              <td class="py-3 text-slate-700 dark:text-slate-300">Pillow</td>
+            </tr>
+            <tr>
+              <td class="py-3 pr-4 align-top font-medium text-slate-900 dark:text-slate-100">MPL-2.0</td>
+              <td class="py-3 text-slate-700 dark:text-slate-300">OCRmyPDF, LibreOffice</td>
+            </tr>
+            <tr>
+              <td class="py-3 pr-4 align-top font-medium text-slate-900 dark:text-slate-100">LGPL-3.0</td>
+              <td class="py-3 text-slate-700 dark:text-slate-300">psycopg</td>
+            </tr>
+            <tr>
+              <td class="py-3 pr-4 align-top font-medium text-slate-900 dark:text-slate-100">Apache-2.0</td>
+              <td class="py-3 text-slate-700 dark:text-slate-300">Tesseract OCR</td>
+            </tr>
+            <tr class="bg-amber-50/60 dark:bg-amber-950/20">
+              <td class="py-3 pr-4 align-top font-medium text-amber-900 dark:text-amber-200">AGPL-3.0 ⚠️</td>
+              <td class="py-3 text-amber-900 dark:text-amber-200">PyMuPDF, Ghostscript</td>
+            </tr>
+            <tr class="bg-amber-50/60 dark:bg-amber-950/20">
+              <td class="py-3 pr-4 align-top font-medium text-amber-900 dark:text-amber-200">GPL-3.0 ⚠️</td>
+              <td class="py-3 text-amber-900 dark:text-amber-200">pdf2docx</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Copyleft note -->
+    <section class="mt-12">
+      <div class="rounded-xl border border-amber-200 bg-amber-50 p-6 dark:border-amber-900/50 dark:bg-amber-950/40">
+        <h2 class="text-lg font-semibold text-amber-900 dark:text-amber-200">
+          Important: copyleft dependencies
+        </h2>
+        <p class="mt-3 text-sm text-amber-900 dark:text-amber-200">
+          Three dependencies have strong copyleft licences:
+        </p>
+        <ul class="mt-3 space-y-2 text-sm text-amber-900 dark:text-amber-200">
+          <li>
+            <strong>PyMuPDF</strong> (AGPL-3.0) — used by the PDF-to-images and
+            PDF-to-PowerPoint tools, and by page previews in the Organise and Merge
+            tools.
+          </li>
+          <li>
+            <strong>pdf2docx</strong> (GPL-3.0) — used by the PDF-to-Word tool.
+          </li>
+          <li>
+            <strong>Ghostscript</strong> (AGPL-3.0) — used by OCRmyPDF on the server, for
+            the OCR tool.
+          </li>
+        </ul>
+        <p class="mt-4 text-sm text-amber-900 dark:text-amber-200">
+          <strong>What this means in practice:</strong>
+        </p>
+        <ul class="mt-2 space-y-1.5 text-sm text-amber-900 dark:text-amber-200">
+          <li>Running Nkokonono privately, for yourself or your team, does not trigger copyleft obligations.</li>
+          <li>Redistributing it publicly (e.g. publishing a fork, packaging for a distro) requires you to comply with AGPL-3.0 and GPL-3.0 — typically by offering source code to recipients under the same licence.</li>
+          <li>Hosting it as a public service: AGPL-3.0 §13 requires offering source code to the users of the service for the AGPL-licensed parts. How this applies to your own surrounding code is a matter for legal advice.</li>
+          <li>Commercial hosting often resolves this by obtaining a commercial licence from the vendors of the affected tools, or by removing those tools from their deployment.</li>
+        </ul>
+        <p class="mt-4 text-sm text-amber-900 dark:text-amber-200">
+          <strong>We make no representation about your compliance.</strong> If you plan
+          to deploy Nkokonono publicly, review the AGPL-3.0, GPL-3.0, and MPL-2.0
+          obligations, or replace the affected tools with permissively-licensed
+          alternatives before you ship.
+        </p>
+      </div>
+    </section>
+
+    <!-- Verifying -->
+    <section class="mt-12">
+      <h2 class="text-xl font-semibold text-slate-900 sm:text-2xl dark:text-slate-100">Verifying the licences yourself</h2>
+      <p class="mt-2 text-slate-700 dark:text-slate-300">
+        Every dependency's licence is listed in its own distribution. To see exactly
+        what's installed in your environment:
+      </p>
+      <pre class="mt-3 overflow-x-auto rounded-lg border border-slate-200 bg-slate-900 p-4 text-xs text-slate-100 dark:border-slate-700"><code>pip install pip-licenses
+pip-licenses --format=markdown --with-urls</code></pre>
+      <p class="mt-3 text-sm text-slate-600 dark:text-slate-400">
+        For system binaries (LibreOffice, Tesseract, Ghostscript), check the licence
+        files distributed with the installed packages or on their upstream project
+        pages.
+      </p>
+    </section>
+
+    <!-- Contributing -->
+    <section class="mt-12">
+      <h2 class="text-xl font-semibold text-slate-900 sm:text-2xl dark:text-slate-100">Contributing</h2>
+      <p class="mt-2 text-slate-700 dark:text-slate-300">
+        Contributions to Nkokonono are accepted under the MIT Licence, matching the
+        project's own licence. See the
+        <a href="{{ github_url }}" target="_blank" rel="noopener noreferrer" class="text-teal-700 underline underline-offset-2 hover:text-teal-800 dark:text-teal-300 dark:hover:text-teal-200">GitHub repository</a>
+        for contribution guidelines.
+      </p>
+    </section>
+
+    <!-- Trademarks -->
+    <section class="mt-12">
+      <h2 class="text-xl font-semibold text-slate-900 sm:text-2xl dark:text-slate-100">Trademarks</h2>
+      <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
+        All product names, logos, and brands mentioned in this project are the property
+        of their respective owners. Use of these names is for identification purposes
+        only and does not imply endorsement.
+      </p>
+    </section>
+
+  </div>
+</section>
+{% endblock %}

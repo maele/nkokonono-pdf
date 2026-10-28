@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Tools — {{ app_name }}{% endblock %}
+{% block content %}
+<section class="py-12 sm:py-16">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <div class="max-w-2xl">
+      <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">All tools</h1>
+      <p class="mt-2 text-slate-600 dark:text-slate-400">Choose a tool. Uploads are validated before any processing begins.</p>
+    </div>
+
+    <div class="mt-8 space-y-4">
+      <label class="sr-only" for="tool-search">Search tools</label>
+      <input id="tool-search" type="search" placeholder="Search tools…"
+             data-tool-search
+             class="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2.5 text-sm placeholder:text-slate-400 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-100">
+      <div class="flex flex-wrap gap-2" role="tablist" aria-label="Filter by category">
+        <button class="chip is-active" type="button" data-category="all" role="tab" aria-selected="true">All</button>
+        {% for category in categories %}
+          <button class="chip" type="button" data-category="{{ category }}" role="tab" aria-selected="false">{{ category }}</button>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3" data-tool-grid>
+      {% for tool in tools %}
+        <a href="{{ url_for('tools.tool_page', tool_name=tool.slug) }}"
+           data-category="{{ tool.category }}" data-title="{{ tool.title|lower }}"
+           class="group flex gap-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-md">
+          <span class="grid h-10 w-10 flex-none place-items-center rounded-lg bg-teal-50 dark:bg-teal-950 text-teal-600">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 3v5h5"/><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            </svg>
+          </span>
+          <span class="min-w-0">
+            <span class="block font-semibold text-slate-900 dark:text-slate-100 group-hover:text-teal-700">{{ tool.title }}</span>
+            <span class="mt-1 block text-sm text-slate-600 dark:text-slate-400">{{ tool.summary }}</span>
+            <span class="mt-2 inline-block text-xs font-medium uppercase tracking-wider text-teal-700 dark:text-teal-300">{{ tool.category }}</span>
+          </span>
+        </a>
+      {% endfor %}
+    </div>
+    <p class="mt-8 text-slate-500 dark:text-slate-400" data-empty-state hidden>No tools match your search.</p>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/tools.js') }}" defer></script>
+{% endblock %}

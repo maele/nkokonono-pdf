@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}{{ tool.title }} — {{ app_name }}{% endblock %}
+{% block content %}
+<section class="py-8 sm:py-12">
+  <div class="mx-auto max-w-3xl px-4 sm:px-6">
+    <nav class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400" aria-label="Breadcrumb">
+      <a href="{{ url_for('main.tool_directory') }}" class="hover:text-slate-900 dark:hover:text-slate-100">Tools</a>
+      <span aria-hidden="true">/</span>
+      <span class="text-slate-900 dark:text-slate-100">{{ tool.title }}</span>
+    </nav>
+
+    <header class="mt-6">
+      <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">{{ tool.title }}</h1>
+      <p class="mt-3 text-lg text-slate-600 dark:text-slate-400">{{ tool.summary }}</p>
+    </header>
+
+    {% if not tool_available %}
+      <div class="mt-8 rounded-xl border border-rose-200 dark:border-rose-900/50 bg-rose-50 dark:bg-rose-950/40 p-5" role="note">
+        <strong class="text-rose-800 dark:text-rose-200">This tool is not available on this server.</strong>
+        <p class="mt-2 text-sm text-rose-700 dark:text-rose-300">{{ tool_unavailable_reason }}</p>
+        <p class="mt-2 text-xs text-rose-600 dark:text-rose-400">Ask the administrator to install the required component, then reload this page.</p>
+      </div>
+    {% else %}
+      <div class="mt-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm sm:p-6">
+        <div class="upload-area"
+             data-tool="{{ tool.slug }}"
+             data-accepts="{{ tool.accepts|join(',') }}"
+             data-multiple="{{ 'true' if tool.multiple else 'false' }}"
+             data-upload-endpoint="{{ url_for('tools.upload', tool_name=tool.slug) }}"
+             data-max-upload-bytes="{{ max_upload_mb * 1024 * 1024 }}">
+          <label for="file-input-{{ tool.slug }}"
+                 class="dropzone flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 px-4 py-12 text-center transition hover:border-teal-500 hover:bg-teal-50/40 dark:hover:bg-teal-950/40 focus-within:border-teal-500 focus-within:bg-teal-50/40 dark:focus-within:bg-teal-950/40 sm:py-16"
+                 data-dropzone>
+            <svg class="text-teal-600" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 16V4"/><path d="m6 10 6-6 6 6"/><path d="M20 16v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-3"/>
+            </svg>
+            <span class="text-base font-semibold text-slate-900 dark:text-slate-100">
+              Drop {{ 'files' if tool.multiple else 'a file' }} here or
+              <span class="text-teal-700 dark:text-teal-300 underline underline-offset-2">browse</span>
+            </span>
+            <span class="text-xs text-slate-500 dark:text-slate-400">
+              Accepted: {{ tool.accepts|join(', ') }} · Max {{ max_upload_mb }} MB per file{% if tool.multiple %} · Up to {{ max_files_per_job }} files{% endif %}
+            </span>
+            <input id="file-input-{{ tool.slug }}" class="sr-only" type="file" name="files"
+                   accept="{{ tool.accepts|join(',') }}" {% if tool.multiple %}multiple{% endif %} data-file-input>
+          </label>
+
+          <div class="upload-status mt-4 min-h-[1.25rem] text-sm" role="status" aria-live="polite" data-status></div>
+          <ul class="mt-3 space-y-2" data-file-list aria-label="Selected files"></ul>
+        </div>
+      </div>
+
+      <div class="mt-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm sm:p-6" data-options>
+        {% include "tools/_options.html" %}
+      </div>
+
+      <div class="mt-6 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
+        <button type="button" disabled
+                class="inline-flex items-center justify-center rounded-lg bg-teal-600 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-teal-700 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500"
+                data-process-btn>Process</button>
+        <div class="process-status text-sm text-slate-600 dark:text-slate-400" role="status" aria-live="polite" data-process-status></div>
+      </div>
+      <div class="mt-4" hidden data-download-area></div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/upload.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/process.js') }}" defer></script>
+  {% if tool.slug in ('organise-pdf', 'merge-pdf') %}
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js" defer></script>
+  {% endif %}
+  {% if tool.slug == 'organise-pdf' %}
+    <script src="{{ url_for('static', filename='js/preview.js') }}" defer></script>
+  {% elif tool.slug == 'merge-pdf' %}
+    <script src="{{ url_for('static', filename='js/merge.js') }}" defer></script>
+  {% endif %}
+{% endblock %}
