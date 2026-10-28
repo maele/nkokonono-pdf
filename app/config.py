@@ -45,7 +45,7 @@ class BaseConfig:
 
     # Public project link shown in the navbar and About section.
     GITHUB_URL = os.environ.get(
-        "GITHUB_URL", "https://github.com/YOUR_ORG/nkokonono-pdf"
+        "GITHUB_URL", "https://github.com/maele/nkokonono-pdf"
     )
 
     # Shown on the Contact page and footer. Overridable per environment.

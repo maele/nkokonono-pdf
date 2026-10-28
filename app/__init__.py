@@ -117,7 +117,7 @@ def _register_template_context(app: Flask) -> None:
             "app_name": "Nkokonono ea PDF",
             "current_year": datetime.now(timezone.utc).year,
             "github_url": app.config.get(
-                "GITHUB_URL", "https://github.com/YOUR_ORG/nkokonono-pdf"
+                "GITHUB_URL", "https://github.com/maele/nkokonono-pdf"
             ),
             "support_email": app.config.get(
                 "SUPPORT_EMAIL", "support@nalaneindustries.co.za"
